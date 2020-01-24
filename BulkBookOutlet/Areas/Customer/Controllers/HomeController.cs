@@ -5,10 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using BulkBookOutlet.Models;
+using BulkBookOutlet.Models.ViewModels;
 
-namespace BulkBookOutlet.Controllers
+namespace BulkBookOutlet.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
