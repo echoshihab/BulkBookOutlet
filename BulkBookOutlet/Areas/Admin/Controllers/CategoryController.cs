@@ -8,12 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace BulkBookOutlet.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CatogoryController : Controller
+    public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
 
 
-        public CatogoryController(IUnitOfWork unitOfWork)
+        public CategoryController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

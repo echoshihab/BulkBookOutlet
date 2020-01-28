@@ -25,9 +25,4 @@
     <ProjectReference Include="..\BulkBookOutlet.Utility\BulkBookOutlet.Utility.csproj" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Views\" />
-  </ItemGroup>
-
 </Project>
