@@ -32,7 +32,7 @@ namespace BulkBookOutlet.Models
         public string ImageUrl { get; set; }
         [Required]
         public int CategoryId { get; set; }
-        [ForeignKey("CateogoryId")]
+        [ForeignKey("CategoryId")]
         public Category Category { get; set; }
 
         [Required]
