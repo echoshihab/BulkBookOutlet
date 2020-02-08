@@ -16,6 +16,7 @@ namespace BulkBookOutlet.DataAccess.Data.Repository
             CoverType = new CoverTypeRepository(_db);
             Product = new ProductRepository(_db);
             Company = new CompanyRepository(_db);
+            User = new ApplicationUserRepository(_db);
 
             SP_Call = new SP_Call(_db);
             
@@ -24,6 +25,7 @@ namespace BulkBookOutlet.DataAccess.Data.Repository
         public IProductRepository Product { get; private set; }
         public ICoverTypeRepository CoverType { get; private set; }
         public ICompanyRepository Company { get; private set; }
+        public IApplicationUserRepository User { get; private set; }
         public ISP_Call SP_Call { get; private set; }
 
         public void Dispose()
