@@ -14,6 +14,8 @@ using Microsoft.Extensions.Hosting;
 using BulkBookOutlet.DataAccess.Data;
 using BulkBookOutlet.DataAccess.Data.Repository.IRepository;
 using BulkBookOutlet.DataAccess.Data.Repository;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using BulkBookOutlet.Utility;
 
 namespace BulkBookOutlet
 {
@@ -21,6 +23,7 @@ namespace BulkBookOutlet
     {
         public Startup(IConfiguration configuration)
         {
+
             Configuration = configuration;
         }
 
@@ -32,8 +35,9 @@ namespace BulkBookOutlet
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddSingleton<IEmailSender, EmailSender>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
