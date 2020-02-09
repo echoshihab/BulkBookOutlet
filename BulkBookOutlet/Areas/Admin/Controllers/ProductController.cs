@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using BulkBookOutlet.DataAccess.Data.Repository.IRepository;
 using BulkBookOutlet.Models;
 using BulkBookOutlet.Models.ViewModels;
+using BulkBookOutlet.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace BulkBookOutlet.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
