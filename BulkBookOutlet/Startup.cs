@@ -53,6 +53,11 @@ namespace BulkBookOutlet
                 options.AppSecret = "6281ea5a09d70cdda59dae7c8e181524";
             });
 
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = "490383041196-cukpv5t2uu9j7932fqpnshvqrt4lci06.apps.googleusercontent.com";
+                options.ClientSecret = "cK0CdZfRgQQm9HAwgNly0387";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
