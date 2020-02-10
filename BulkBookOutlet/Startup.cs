@@ -49,14 +49,14 @@ namespace BulkBookOutlet
             });
             services.AddAuthentication().AddFacebook(options =>
             {
-                options.AppId = "";
-                options.AppSecret = "";
+                options.AppId = Environment.GetEnvironmentVariable("facebookID", EnvironmentVariableTarget.User);
+                options.AppSecret = Environment.GetEnvironmentVariable("facebookSecret", EnvironmentVariableTarget.User);
             });
 
             services.AddAuthentication().AddGoogle(options =>
             {
-                options.ClientId = "";
-                options.ClientSecret = "";
+                options.ClientId = Environment.GetEnvironmentVariable("googleID", EnvironmentVariableTarget.User);
+                options.ClientSecret = Environment.GetEnvironmentVariable("googleSecret", EnvironmentVariableTarget.User);
             });
         }
 
