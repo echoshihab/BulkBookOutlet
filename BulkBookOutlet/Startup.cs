@@ -38,6 +38,11 @@ namespace BulkBookOutlet
             services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.Configure<EmailOptions>(option =>
+            {
+                option.SendGridKey = Environment.GetEnvironmentVariable("sendgridKey", EnvironmentVariableTarget.User);
+                option.SendGridUser = Environment.GetEnvironmentVariable("sendgridUser", EnvironmentVariableTarget.User);
+            });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
