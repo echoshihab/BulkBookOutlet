@@ -17,8 +17,9 @@ namespace BulkBookOutlet.Models
         public int ID { get; set; }
 
         public int ApplicationUserId { get; set; }
+        [ForeignKey("ApplicationUserId")]
         public ApplicationUser ApplicationUser { get; set; }
-
+        
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
 
