@@ -6,10 +6,10 @@ using System.Text;
 
 namespace BulkBookOutlet.Models
 {
-    class OrderHeader
+    public class OrderHeader
     {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         public int ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]
