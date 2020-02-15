@@ -86,6 +86,7 @@ namespace BulkBookOutlet.Areas.Admin.Controllers
                     if(productVM.Product.ImageUrl != null)
                     {
                         //this is an edit and we need to remvoe the old image
+
                         var imagePath = Path.Combine(webRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
                         if(System.IO.File.Exists(imagePath))
                         {
@@ -139,6 +140,12 @@ namespace BulkBookOutlet.Areas.Admin.Controllers
             if(objFromDb == null)
             {
                 return Json(new { success = false, message = "Error while deleting!" });
+            }
+            string webRootPath = _hostEnvironment.WebRootPath;
+            var imagePath = Path.Combine(webRootPath, objFromDb.ImageUrl.TrimStart('\\'));
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
             }
             _unitOfWork.Product.Remove(objFromDb);
             _unitOfWork.Save();
