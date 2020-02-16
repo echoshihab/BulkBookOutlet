@@ -63,6 +63,13 @@ namespace BulkBookOutlet
                 options.ClientId = Environment.GetEnvironmentVariable("googleID", EnvironmentVariableTarget.User);
                 options.ClientSecret = Environment.GetEnvironmentVariable("googleSecret", EnvironmentVariableTarget.User);
             });
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,6 +90,7 @@ namespace BulkBookOutlet
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();

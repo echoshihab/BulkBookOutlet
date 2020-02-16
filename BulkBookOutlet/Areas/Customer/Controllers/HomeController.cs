@@ -10,6 +10,8 @@ using BulkBookOutlet.DataAccess.Data.Repository.IRepository;
 using BulkBookOutlet.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using BulkBookOutlet.Utility;
+using Microsoft.AspNetCore.Http;
 
 namespace BulkBookOutlet.Areas.Customer.Controllers
 {
@@ -28,6 +30,19 @@ namespace BulkBookOutlet.Areas.Customer.Controllers
         public IActionResult Index()
         {
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category,CoverType");
+
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            if(claim != null)
+            {
+                var count = _unitOfWork.ShoppingCart
+                   .GetAll(c => c.ApplicationUserId == claim.Value)
+                   .ToList().Count();
+
+                HttpContext.Session.SetInt32(SD.ssShoppingCart, count);
+            }
+
 
             return View(productList);
         }
@@ -75,6 +90,12 @@ namespace BulkBookOutlet.Areas.Customer.Controllers
                     //entityframework tracks this so update is not necessary but using for better readability
                 }
                 _unitOfWork.Save();
+                var count = _unitOfWork.ShoppingCart
+                    .GetAll(c => c.ApplicationUserId == CartObject.ApplicationUserId)
+                    .ToList().Count();
+
+                //HttpContext.Session.SetObject(SD.ssShoppingCart, count);  <-- if we neededing something other than int
+                HttpContext.Session.SetInt32(SD.ssShoppingCart, count);
                 return RedirectToAction(nameof(Index));
 
             }
