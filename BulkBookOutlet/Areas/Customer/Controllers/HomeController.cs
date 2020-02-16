@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using BulkBookOutlet.Models.ViewModels;
 using BulkBookOutlet.DataAccess.Data.Repository.IRepository;
 using BulkBookOutlet.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace BulkBookOutlet.Areas.Customer.Controllers
 {
@@ -39,6 +41,55 @@ namespace BulkBookOutlet.Areas.Customer.Controllers
                 ProductId = productFromDb.Id
             };
             return View(cartObj);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+
+        public IActionResult Details(ShoppingCart CartObject)
+        {
+            CartObject.Id = 0;
+            if (ModelState.IsValid)
+            {
+                //add to cart
+                var claimsIdentity = (ClaimsIdentity)User.Identity;
+                var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+                CartObject.ApplicationUserId = claim.Value;
+
+                ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(
+                    u => u.ApplicationUserId == CartObject.ApplicationUserId && u.ProductId == CartObject.ProductId,
+                    includeProperties: "Product"
+                    );
+
+                if (cartFromDb == null)
+                {
+                    //no record exists in datbase for this user & product
+                    _unitOfWork.ShoppingCart.Add(CartObject);
+                }
+                else
+                {
+                    cartFromDb.Count += CartObject.Count;
+                    _unitOfWork.ShoppingCart.Update(cartFromDb);  
+                    //entityframework tracks this so update is not necessary but using for better readability
+                }
+                _unitOfWork.Save();
+                return RedirectToAction(nameof(Index));
+
+            }
+            else
+            {
+                var productFromDb = _unitOfWork.Product.GetFirstOrDefault(u => u.Id == CartObject.ProductId, includeProperties: "Category,CoverType");
+                ShoppingCart cartObj = new ShoppingCart()
+                {
+                    Product = productFromDb,
+                    ProductId = productFromDb.Id
+                };
+                return View(cartObj);
+            }
+
+           
         }
 
         public IActionResult Privacy()
