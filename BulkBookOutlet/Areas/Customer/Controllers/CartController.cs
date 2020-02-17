@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BulkBookOutlet.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class CartController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
