@@ -181,9 +181,4 @@ namespace BulkBookOutlet.Areas.Customer.Controllers
 
     }
 
-    }
 
-    }
-
-    }
-}
