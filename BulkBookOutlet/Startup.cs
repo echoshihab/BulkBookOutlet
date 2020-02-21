@@ -16,6 +16,7 @@ using BulkBookOutlet.DataAccess.Data.Repository.IRepository;
 using BulkBookOutlet.DataAccess.Data.Repository;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using BulkBookOutlet.Utility;
+using Stripe;
 
 namespace BulkBookOutlet
 {
@@ -42,6 +43,11 @@ namespace BulkBookOutlet
             {
                 option.SendGridKey = Environment.GetEnvironmentVariable("sendgridKey", EnvironmentVariableTarget.User);
                 option.SendGridUser = Environment.GetEnvironmentVariable("sendgridUser", EnvironmentVariableTarget.User);
+            });
+            services.Configure<StripeSettings>(option =>
+            {
+                option.PublishedKey = Environment.GetEnvironmentVariable("stripePublishKey", EnvironmentVariableTarget.User);
+                option.SecretKey = Environment.GetEnvironmentVariable("stripeSecretKey", EnvironmentVariableTarget.User);
             });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
@@ -90,6 +96,7 @@ namespace BulkBookOutlet
             app.UseStaticFiles();
 
             app.UseRouting();
+            StripeConfiguration.ApiKey = Environment.GetEnvironmentVariable("stripeSecretKey", EnvironmentVariableTarget.User);
             app.UseSession();
 
             app.UseAuthentication();
