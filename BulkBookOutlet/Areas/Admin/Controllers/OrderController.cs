@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using BulkBookOutlet.DataAccess.Data.Repository.IRepository;
 using BulkBookOutlet.Models;
+using BulkBookOutlet.Models.ViewModels;
 using BulkBookOutlet.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,8 @@ namespace BulkBookOutlet.Areas.Admin.Controllers
     public class OrderController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        [BindProperty]
+        public OrderDetailsVM orderVM { get; set; }
 
         public OrderController(IUnitOfWork unitOfWork)
         {
@@ -25,6 +28,17 @@ namespace BulkBookOutlet.Areas.Admin.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult Details(int id)
+        {
+            orderVM = new OrderDetailsVM()
+            {
+                OrderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(u => u.Id == id,
+                includeProperties: "ApplicationUser"),
+                OrderDetails = _unitOfWork.OrderDetails.GetAll(o => o.OrderId == id, includeProperties: "Product")
+            };
+            return View(orderVM);
         }
 
         #region API Calls
