@@ -46,11 +46,11 @@ namespace BulkBookOutlet.Areas.Admin.Controllers
 
         public IActionResult ShipOrder(int id)
         {
-            OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(u => u.Id == id);
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(u => u.Id == orderVM.OrderHeader.Id);
             orderHeader.TrackingNumber = orderVM.OrderHeader.TrackingNumber;
             orderHeader.Carrier = orderVM.OrderHeader.Carrier;
-            orderHeader.OrderStatus = SD.StatusShipped; 
-            orderHeader.ShippingDate = DateTime.Now
+            orderHeader.OrderStatus = SD.StatusShipped;
+            orderHeader.ShippingDate = DateTime.Now;
 
             _unitOfWork.Save();
             return RedirectToAction("Index");

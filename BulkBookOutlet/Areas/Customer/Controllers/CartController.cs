@@ -224,7 +224,7 @@ namespace BulkBookOutlet.Areas.Customer.Controllers
             HttpContext.Session.SetInt32(SD.ssShoppingCart, 0);
             if(stripeToken == null)
             {
-                ShoppingCartVM.OrderHeader.PaymentDate = DateTime.Now.AddDays(30);
+                ShoppingCartVM.OrderHeader.PaymentDueDate = DateTime.Now.AddDays(30);
                 ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusDelayedPayment;
                 ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusApproved;
             }
