@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BulkBookOutlet.DataAccess.Data.Repository.IRepository;
 using BulkBookOutlet.Models;
+using BulkBookOutlet.Models.ViewModels;
 using BulkBookOutlet.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,9 +23,26 @@ namespace BulkBookOutlet.Areas.Admin.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int productPage=1)
         {
-            return View();
+            CategoryVM categoryVM = new CategoryVM()
+            {
+                Categories = await _unitOfWork.Category.GetAllAsync()
+            };
+
+            var count = categoryVM.Categories.Count();
+            categoryVM.Categories = categoryVM.Categories.OrderBy(p => p.Name)
+                .Skip((productPage - 1) * 2).Take(2).ToList();
+
+            categoryVM.PagingInfo = new PagingInfo
+            {
+                CurrentPage = productPage,
+                ItemsPerPage = 2,
+                TotalItem = count,
+                urlParam = "/Admin/Category/Index?productPage=:"  //replacing ':' with the value
+            };
+
+            return View(categoryVM);
         }
 
         public async Task<IActionResult> Upsert(int? id)
