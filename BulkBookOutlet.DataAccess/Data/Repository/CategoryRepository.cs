@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BulkBookOutlet.DataAccess.Data.Repository
 {
-    class CategoryRepository: Repository<Category>, ICategoryRepository
+    class CategoryRepository: RepositoryAsync<Category>, ICategoryRepository
     {
         private readonly ApplicationDbContext _db;
 

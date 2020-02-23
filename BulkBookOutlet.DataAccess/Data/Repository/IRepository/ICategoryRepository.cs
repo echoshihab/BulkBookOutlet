@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BulkBookOutlet.DataAccess.Data.Repository.IRepository
 {
-    public interface ICategoryRepository: IRepository<Category>
+    public interface ICategoryRepository: IRepositoryAsync<Category>
     {
         void Update(Category category);
 
