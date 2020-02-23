@@ -29,7 +29,7 @@ namespace BulkBookOutlet.TagHelpers
         {
             TagBuilder result = new TagBuilder("div");
 
-            for(int i=1; i< PageModel.TotalPAge; i++)
+            for(int i=1; i<= PageModel.TotalPAge; i++)
             {
                 TagBuilder tag = new TagBuilder("a");
                 string url = PageModel.urlParam.Replace(":", i.ToString());
