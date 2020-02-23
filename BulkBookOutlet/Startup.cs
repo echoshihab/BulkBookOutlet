@@ -49,6 +49,12 @@ namespace BulkBookOutlet
                 option.PublishedKey = Environment.GetEnvironmentVariable("stripePublishKey", EnvironmentVariableTarget.User);
                 option.SecretKey = Environment.GetEnvironmentVariable("stripeSecretKey", EnvironmentVariableTarget.User);
             });
+            services.Configure<TwilioSettings>(option =>
+            {
+                option.PhoneNumber = Environment.GetEnvironmentVariable("twPhoneNumber", EnvironmentVariableTarget.User);
+                option.AccountSid = Environment.GetEnvironmentVariable("twAccountSID", EnvironmentVariableTarget.User);
+                option.AuthToken = Environment.GetEnvironmentVariable("twAuthToken", EnvironmentVariableTarget.User);
+            });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();

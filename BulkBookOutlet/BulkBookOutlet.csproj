@@ -19,6 +19,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="Stripe.net" Version="34.23.0" />
+    <PackageReference Include="Twilio" Version="5.37.5" />
   </ItemGroup>
 
 
