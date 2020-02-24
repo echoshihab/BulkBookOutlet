@@ -17,6 +17,7 @@ using BulkBookOutlet.DataAccess.Data.Repository;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using BulkBookOutlet.Utility;
 using Stripe;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace BulkBookOutlet
 {
@@ -39,6 +40,8 @@ namespace BulkBookOutlet
             services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
+
             services.Configure<EmailOptions>(option =>
             {
                 option.SendGridKey = Environment.GetEnvironmentVariable("sendgridKey", EnvironmentVariableTarget.User);

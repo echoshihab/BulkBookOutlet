@@ -102,10 +102,12 @@ namespace BulkBookOutlet.Areas.Admin.Controllers
             var objFromDb = await _unitOfWork.Category.GetAsync(id);
             if(objFromDb == null)
             {
+                TempData["Error"] = "Error deleting Category";
                 return Json(new { success = false, message = "Error while deleting!" });
             }
             await _unitOfWork.Category.RemoveAsync(objFromDb);
             _unitOfWork.Save();
+            TempData["Success"] = "Category Successfully deleted";
             return Json(new { success = true, message = "Delete successful" });
         }
         #endregion
